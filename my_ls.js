@@ -28,8 +28,6 @@ const parseOpt = (arr) => {
     return newArr;
 }
 
-if (options['-a'])
-    options['-A'] = true;
 
 // Array without options
 const woOpt = parseOpt(cmdArgs);
@@ -61,5 +59,4 @@ if (woOpt.length === 0) {
     }
     process.exit(err);
 }
-
 
