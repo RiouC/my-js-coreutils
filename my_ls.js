@@ -10,44 +10,49 @@ if (process.argv.length < 2) {
 }
 
 // Options
-let options = {all: false,
-	       almostAll: false};
+let options = {'-a': false,
+	       '-A': false};
+
 
 const parseOpt = (arr) => {
     let newArr = [];
-    for (let i = 0; i < arr.length; i++) {
-	if (arr[i] === "-a") {
-	    options.all = true;
-	} else if (arr[i] === '-A') {
-	    options.almostAll = true;
+    for (let arg of arr) {
+	if (Object.keys(options).includes(arg)) {
+	    options[arg] = true;
+	    console.log(options);
+	    // options.all = true;
 	} else {
-	    newArr.push(arr[i]);
+	    newArr.push(arg);
 	}
     }
     return newArr;
 }
 
+if (options['-a'])
+    options['-A'] = true;
+
 // Array without options
 const woOpt = parseOpt(cmdArgs);
 // console.log(woOpt)
 
-// const path = process.argv[2];
 
 // Loop
-if (process.argv.length === 2) {
-    fs.readdirSync("./");
-    process.exit(0);
+if (woOpt.length === 0) {
+    woOpt = ['./'];
 } else {
     for (path of woOpt) {
-	if (options.all && !options.almostAll) {
+	if (woOpt.length > 1)
+	    console.log(`${path}:`);
+	if (options['-a'] && !options['-A']) {
 	    console.log('.');
 	    console.log('..');
 	}
 	for (file of fs.readdirSync(path)) {
-	    if (!options.all && file.startsWith("."))
+	    if (!options['-A'] && !options['-a'] && file.startsWith('.'))
 		continue;
 	    console.log(file);
 	}
+	console.log();
     }
     process.exit(0);
 }
