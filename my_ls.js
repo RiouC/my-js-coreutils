@@ -3,6 +3,7 @@ const { basename } = require('path');
 
 const [,, ...cmdArgs] = process.argv;
 
+let err = 0;
 
 // check argv length
 if (process.argv.length < 2) {
@@ -32,7 +33,6 @@ if (options['-a'])
 
 // Array without options
 const woOpt = parseOpt(cmdArgs);
-// console.log(woOpt)
 
 
 // Loop
@@ -43,6 +43,7 @@ if (woOpt.length === 0) {
 	if (!fs.existsSync(path)) {
 	    const bn = basename(process.argv[1], '.js')
 	    console.log(`${bn}: cannot access ${path}: No such file or directory`);
+	    err = 2;
 	    continue;
 	}
 	if (woOpt.length > 1)
@@ -58,7 +59,7 @@ if (woOpt.length === 0) {
 	}
 	console.log();
     }
-    process.exit(0);
+    process.exit(err);
 }
 
 
