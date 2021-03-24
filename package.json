@@ -1,0 +1,8 @@
+{
+  "name": "my-js-coreutils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:RiouC/my-js-coreutils.git",
+  "author": "RiouC <riou.christophe@protonmail.com>",
+  "license": "MIT"
+}
