@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { basename } = require('path');
 
 const [,, ...cmdArgs] = process.argv;
 
@@ -19,8 +20,6 @@ const parseOpt = (arr) => {
     for (let arg of arr) {
 	if (Object.keys(options).includes(arg)) {
 	    options[arg] = true;
-	    console.log(options);
-	    // options.all = true;
 	} else {
 	    newArr.push(arg);
 	}
@@ -41,6 +40,11 @@ if (woOpt.length === 0) {
     woOpt = ['./'];
 } else {
     for (path of woOpt) {
+	if (!fs.existsSync(path)) {
+	    const bn = basename(process.argv[1], '.js')
+	    console.log(`${bn}: cannot access ${path}: No such file or directory`);
+	    continue;
+	}
 	if (woOpt.length > 1)
 	    console.log(`${path}:`);
 	if (options['-a'] && !options['-A']) {
