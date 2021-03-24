@@ -5,7 +5,7 @@ const [,, ...cmdArgs] = process.argv;
 
 // check argv length
 if (process.argv.length < 2) {
-    console.log('Usage: node my_ls.js [path]');
+    console.log('Usage: node my_ls.js [options] [path]');
     process.exit(-1);
 }
 
@@ -27,31 +27,29 @@ const parseOpt = (arr) => {
     return newArr;
 }
 
-const tab = parseOpt(cmdArgs);
+// Array without options
+const woOpt = parseOpt(cmdArgs);
+// console.log(woOpt)
 
-const path = process.argv[2];
+// const path = process.argv[2];
 
 // Loop
 if (process.argv.length === 2) {
     fs.readdirSync("./");
     process.exit(0);
+} else {
+    for (path of woOpt) {
+	if (options.all && !options.almostAll) {
+	    console.log('.');
+	    console.log('..');
+	}
+	for (file of fs.readdirSync(path)) {
+	    if (!options.all && file.startsWith("."))
+		continue;
+	    console.log(file);
+	}
+    }
+    process.exit(0);
 }
-else {
-    fs.readdirSync(path);
-}
 
-
-const test = fs.readdirSync(path);
-
-
-if (options.all && !options.almostAll) {
-    console.log('.');
-    console.log('..');
-}
-
-for (file of test) {
-    if (!options.all && file.startsWith("."))
-	continue;
-    console.log(file);
-}
 
