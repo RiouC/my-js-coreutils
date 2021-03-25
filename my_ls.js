@@ -44,6 +44,12 @@ if (woOpt.length === 0) {
 	    err = 2;
 	    continue;
 	}
+	const stats = fs.statSync(path);
+	if (stats.isFile()) {
+	    const file = fs.readFileSync(path);
+	    console.log(path);
+	    process.exit(0);
+	}
 	if (woOpt.length > 1)
 	    console.log(`${path}:`);
 	if (options['-a'] && !options['-A']) {
