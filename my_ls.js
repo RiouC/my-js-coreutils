@@ -48,7 +48,7 @@ if (woOpt.length === 0) {
 	if (stats.isFile()) {
 	    const file = fs.readFileSync(path);
 	    console.log(path);
-	    process.exit(0);
+	    continue;
 	}
 	if (woOpt.length > 1)
 	    console.log(`${path}:`);
